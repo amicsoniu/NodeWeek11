@@ -2,6 +2,8 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs')
 
+const port = process.env.PORT || 8080;
+
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -17,23 +19,23 @@ hbs.registerHelper('message', (text) => {
 	return text.toUpperCase();
 })
 
-app.use((request, response, next) => {
-	var time = new Date().toString();
-	// console.log(`${time}: ${request.method} ${request.url}`);
-	var log = `${time}: ${request.method} ${request.url}`;
-	fs.appendFile('server.log', log + '\n', (error) => {
-		if (error) {
-			console.log('Unable to log message');
-		}
-	});
-	next();
-});
+// app.use((request, response, next) => {
+// 	var time = new Date().toString();
+// 	// console.log(`${time}: ${request.method} ${request.url}`);
+// 	var log = `${time}: ${request.method} ${request.url}`;
+// 	fs.appendFile('server.log', log + '\n', (error) => {
+// 		if (error) {
+// 			console.log('Unable to log message');
+// 		}
+// 	});
+// 	next();
+// });
 
-app.use((request, response, next) => {
-	response.render('maintenance.hbs', {
-		error: 'The site is currently down for a maintenance'
-	});
-});
+// app.use((request, response, next) => {
+// 	response.render('maintenance.hbs', {
+// 		error: 'The site is currently down for a maintenance'
+// 	});
+// });
 
 app.get('/', (request, response) => {
 	// response.send('<h1>Hello Express!</h1>');
